@@ -81,13 +81,10 @@
 		resultMap="resultMap">
 		select*from
 		bbs_sport
-
 		<where>
-			<if test="id!=null">
-				id=#{id}
-			</if>
+			id=#{id}
 		</where>
-		limit 0,5
+		<!-- limit 0,5 -->
 	</select>
 
 	<!-- 根据品牌名字查询品牌数据 -->
@@ -136,9 +133,7 @@
 				image_url=#{imageUrl},
 			</if>
 
-			<if test="webSite!=null">
-				web_site=#{webSite},
-			</if>
+			<!-- <if test="webSite!=null"> web_site=#{webSite}, </if> -->
 
 			<if test="sort!=null">
 				sort=#{sort},
@@ -148,6 +143,10 @@
 				is_display=#{isDisplay}
 			</if>
 		</set>
+
+		<where>
+			id=#{id},
+		</where>
 	</update>
 
 </mapper>

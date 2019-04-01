@@ -9,13 +9,15 @@
 	<div class="box-positon">
 		<div class="rpos">当前位置: 品牌管理 - 添加</div>
 		<form class="ropt">
-			<input type="submit" onclick="this.form.action='v_list.shtml';"
-				value="返回列表" class="return-button" />
+			<input type="submit"
+				onclick="this.form.action='/admin/brand/list.do';" value="返回列表"
+				class="return-button" />
 		</form>
 		<div class="clear"></div>
 	</div>
 	<div class="body-box" style="float: right">
-		<form id="jvForm" action="o_save.shtml" method="post">
+
+		<form id="jvForm" action="/admin/brand/update.do" method="post">
 			<table cellspacing="1" cellpadding="2" width="100%" border="0"
 				class="pn-ftable">
 				<tbody>
@@ -25,7 +27,8 @@
 							品牌名称:
 						</td>
 						<td width="80%" class="pn-fcontent">
-							<input type="text" class="required" name="name" maxlength="100" />
+							<input type="text" class="required" name="name" maxlength="100"
+								value="${brandBean.name }" />
 						</td>
 					</tr>
 					<tr>
@@ -38,7 +41,8 @@
 					<tr>
 						<td width="20%" class="pn-flabel pn-flabel-h"></td>
 						<td width="80%" class="pn-fcontent">
-							<img width="100" height="100" id="imgSize1ImgSrc" />
+							<img width="100" height="100" id="imgSize1ImgSrc"
+								src="${serverUrl.concat(brandBean.imageUrl) }" />
 							<input type="file" />
 						</td>
 					</tr>
@@ -46,21 +50,26 @@
 						<td width="20%" class="pn-flabel pn-flabel-h">品牌描述:</td>
 						<td width="80%" class="pn-fcontent">
 							<input type="text" class="required" name="name" maxlength="80"
-								size="60" />
+								size="60" value="${brandBean.description }" />
 						</td>
 					</tr>
 					<tr>
 						<td width="20%" class="pn-flabel pn-flabel-h">排序:</td>
 						<td width="80%" class="pn-fcontent">
-							<input type="text" class="required" name="name" maxlength="80" />
+							<input type="text" class="required" name="name" maxlength="80"
+								value="${brandBean.sort }" />
 						</td>
 					</tr>
 					<tr>
 						<td width="20%" class="pn-flabel pn-flabel-h">是否可用:</td>
 						<td width="80%" class="pn-fcontent">
-							<input type="radio" name="isDisplay" value="1" checked="checked" />
-							可用
-							<input type="radio" name="isDisplay" value="0" />
+							<input type="radio" name="isDisplay"
+								value="${brandBean.isDisplay }"
+								<c:if test="${brandBean.isDisplay==1}">checked="checked" </c:if>>
+								可用 </input>
+							<input type="radio" name="isDisplay"
+								value="${brandBean.isDisplay }"
+								<c:if test="${brandBean.isDisplay==0}">checked="checked" </c:if> />
 							不可用
 						</td>
 					</tr>

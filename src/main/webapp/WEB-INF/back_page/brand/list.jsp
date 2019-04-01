@@ -16,6 +16,7 @@
 		<div class="clear"></div>
 	</div>
 	<div class="body-box">
+
 		<form action="/admin/brand/list.do" method="post"
 			style="padding-top: 5px;">
 			品牌名称:
@@ -46,6 +47,7 @@
 			</thead>
 			<tbody class="pn-ltbody">
 
+				<!--  遍历品牌数据，然后逐一展示-->
 				<c:forEach items="${brandBean}" var="brandBean">
 					<tr bgcolor="#ffffff" onmouseout="this.bgColor='#ffffff'"
 						onmouseover="this.bgColor='#eeeeee'">
@@ -68,8 +70,8 @@
 						</td>
 
 						<td align="center">
-							<a class="pn-opt" href="#">修改</a>
-							|
+							<!--&name=name&imageUrl=imageUrl&description=description&sort=sort&isDisplay=isDisplay  -->
+							<a class="pn-opt" href="/admin/brand/edit.do?id=${brandBean.id}">修改</a>
 							<a class="pn-opt"
 								onclick="if(!confirm('您确定删除吗？')) {return false;}"
 								href="/admin/brand/delete.do?id=${brandBean.id}&
@@ -195,16 +197,18 @@
 			& gt; 表示大于号 >
 			& copy ;表示 @   -->
 
+
+		<!--分页显示  -->
 		<div class="page pb15">
 			<span class="r inb_a page_b">
 
 
 				<font size="2">
 					<a
-						href="/admin/brand/list.do?&amp;isDisplay=${isDisplay }&amp;pageNo=1">首页</a>
+						href="/admin/brand/divide.do?&amp;isDisplay=${isDisplay }&amp;pageNo=1">首页</a>
 				</font>
 				<a
-					href="/admin/brand/list.do?&amp;isDisplay=${isDisplay }&amp;pageNo=${previousPage}">
+					href="/admin/brand/divide.do?&amp;isDisplay=${isDisplay }&amp;pageNo=${previousPage}">
 					<font size="2"> 上一页 </font>
 				</a>
 
@@ -216,24 +220,24 @@
 					</c:if>
 				</strong>
 				<a
-					href="/admin/brand/list.do?&amp;isDisplay=${isDisplay}&amp;pageNo=2">2</a>
+					href="/admin/brand/divide.do?&amp;isDisplay=${isDisplay}&amp;pageNo=2">2</a>
 				<a
-					href="/admin/brand/list.do?&amp;isDisplay=${isDisplay}&amp;pageNo=3">3</a>
+					href="/admin/brand/divide.do?&amp;isDisplay=${isDisplay}&amp;pageNo=3">3</a>
 				<a
-					href="/admin/brand/list.do?&amp;isDisplay=${isDisplay}&amp;pageNo=4">4</a>
+					href="/admin/brand/divide.do?&amp;isDisplay=${isDisplay}&amp;pageNo=4">4</a>
 				<a
-					href="/admin/brand/list.do?&amp;isDisplay=${isDisplay}&amp;pageNo=5">5</a>
+					href="/admin/brand/divide.do?&amp;isDisplay=${isDisplay}&amp;pageNo=5">5</a>
 				<c:if test="${pageNo!=totalPages }">
 					<a
-						href="/admin/brand/list.do?&amp;isDisplay=${isDisplay}&amp;pageNo=${nextPage}">${pageNo }</a>
+						href="/admin/brand/divide.do?&amp;isDisplay=${isDisplay}&amp;pageNo=${nextPage}">${pageNo }</a>
 				</c:if>
 
 				<a
-					href="/admin/brand/list.do?&amp;isDisplay=${isDisplay}&amp;pageNo=${nextPage}">
+					href="/admin/brand/divide.do?&amp;isDisplay=${isDisplay}&amp;pageNo=${nextPage}">
 					<font size="2">下一页</font>
 				</a>
 				<a
-					href="/admin/brand/list.do?&amp;isDisplay=${isDisplay}&amp;pageNo=${totalPages}">
+					href="/admin/brand/divide.do?&amp;isDisplay=${isDisplay}&amp;pageNo=${totalPages}">
 					<font size="2">尾页</font>
 				</a>
 				共
@@ -243,7 +247,7 @@
 					value="${pageNo}" />
 				页
 				<input type="button"
-					onclick="javascript:window.location.href ='/admin/brand/list.do?&amp;isDisplay=0&amp;pageNo=' + $('#PAGENO').val() "
+					onclick="javascript:window.location.href ='/admin/brand/divide.do?&amp;isDisplay=0&amp;pageNo=' + $('#PAGENO').val() "
 					value="确定" class="hand btn60x20" id="skip" />
 
 			</span>

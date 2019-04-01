@@ -20,8 +20,8 @@ public interface BrandDao {
 	// 查询品牌数据总记录数
 	public int queryTotal();
 
-	// 根据id查询品牌数据
-	public List<BrandBean> queryById(Integer id);
+	// 根据id查询品牌数据List<BrandBean>
+	public BrandBean queryById(Integer id);
 
 	// 根据品牌名称查询品牌数据
 	public List<BrandBean> queryByName(String name);

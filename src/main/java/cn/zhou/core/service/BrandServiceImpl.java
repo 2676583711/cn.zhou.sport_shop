@@ -29,7 +29,7 @@ public class BrandServiceImpl implements BrandService {
 	}
 
 	@Override
-	public List<BrandBean> queryById(Integer id) {
+	public BrandBean queryById(Integer id) {
 		return brandDao.queryById(id);
 	}
 

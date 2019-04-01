@@ -19,7 +19,7 @@ public interface BrandService {
 	public int queryTotal();
 
 	// 根据id查询品牌数据
-	public List<BrandBean> queryById(Integer id);
+	public BrandBean queryById(Integer id);
 
 	// 根据品牌名称查询品牌数据
 	public List<BrandBean> queryByName(String name);
