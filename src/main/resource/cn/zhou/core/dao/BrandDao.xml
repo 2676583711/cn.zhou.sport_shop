@@ -63,10 +63,7 @@
 			</if>
 		</where>
 		<!--mybaties使用 and 代替 & -->
-		<if test="startIndex!=null and limit!=null">
-			limit #{startIndex},#{limit}
-		</if>
-
+		limit #{startIndex},#{pageSize}
 	</select>
 
 
@@ -74,6 +71,7 @@
 	<select id="queryTotal" resultType="Integer"> <!-- parameterType="BrandBean" -->
 		select count(*) from bbs_sport
 	</select>
+
 
 
 	<!--#{} 传入值时，sql解析时，参数是带引号的，而${}穿入值，sql解析时，参数是不带引号的。 -->
@@ -104,22 +102,25 @@
 	</delete>
 
 	<!-- 根据品牌多个id删除品牌数据 -->
-	<delete id="deleteByIds" parameterType="List">
+	<!-- mybaties 之 foreach::: parameterType="List" ->collection="array" parameterType="List" 
+		->collection="map" -->
+	<delete id="deleteByIds" parameterType="list">
 		delete from bbs_sport
 		<where>
 			id in
-			<foreach collection="array" item="id" open="(" close=")"
-				separator=","></foreach>
+			<foreach collection="array" item="ids" open="(" close=")"
+				separator=",">
+				#{ids}
+			</foreach>
 		</where>
 	</delete>
 
+
 	<!-- 根据品牌id修改品牌数据 -->
-	<update id="updateById" parameterType="BrandBean">
+	<update id="updateById" parameterType="brandBean">
 		update bbs_sport
 		<set>
-			<if test="id!=null">
-				id=#{id},
-			</if>
+			<!-- <if test="id!=null"> id=#{id}, </if> id不修改 -->
 
 			<if test="name!=null">
 				name=#{name},
@@ -133,7 +134,9 @@
 				image_url=#{imageUrl},
 			</if>
 
-			<!-- <if test="webSite!=null"> web_site=#{webSite}, </if> -->
+			<if test="webSite!=null">
+				web_site=#{webSite},
+			</if>
 
 			<if test="sort!=null">
 				sort=#{sort},
@@ -145,7 +148,7 @@
 		</set>
 
 		<where>
-			id=#{id},
+			id=#{id}
 		</where>
 	</update>
 

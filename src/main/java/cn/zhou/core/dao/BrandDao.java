@@ -3,6 +3,7 @@ package cn.zhou.core.dao;
 import java.util.List;
 
 import cn.zhou.core.bean.BrandBean;
+import division_page.PageBean;
 
 /*
  * 品牌数据访问接口
@@ -18,7 +19,7 @@ public interface BrandDao {
 	public List<BrandBean> query(BrandBean brandBean);
 
 	// 查询品牌数据总记录数
-	public int queryTotal();
+	public Integer queryTotal();
 
 	// 根据id查询品牌数据List<BrandBean>
 	public BrandBean queryById(Integer id);

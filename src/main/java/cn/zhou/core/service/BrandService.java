@@ -3,6 +3,7 @@ package cn.zhou.core.service;
 import java.util.List;
 
 import cn.zhou.core.bean.BrandBean;
+import division_page.PageBean;
 
 /*
  * 品牌业务接口
@@ -16,7 +17,7 @@ public interface BrandService {
 	public List<BrandBean> query(BrandBean brandBean);
 
 	// 查询品牌数据总记录数
-	public int queryTotal();
+	public Integer queryTotal();
 
 	// 根据id查询品牌数据
 	public BrandBean queryById(Integer id);

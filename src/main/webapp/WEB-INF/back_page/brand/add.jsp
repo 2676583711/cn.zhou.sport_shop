@@ -8,15 +8,12 @@
 <script type="text/javascript" language="JavaScript"
 	charset="x-UTF-16LE-BOM">
 	function uploadImg() {
-
 		//alert("success")
-
 		var options = {
 			url : "/upload/uploadImg.do",
 			dataType : "json",
 			type : "post",
 			success : function(data) {
-
 				$("#allImgUrl").attr("src", data.url);
 				$("#imageUrl").attr("value", data.path);
 
@@ -68,8 +65,12 @@
 						<td width="20%" class="pn-flabel pn-flabel-h"></td>
 						<!--选择上传文件  -->
 						<td width="80%" class="pn-fcontent">
+
+							<!--展示图片  -->
 							<img width="100" height="100" id="allImgUrl" />
+							<!--隐藏域，图片地址  -->
 							<input type="hidden" id="imageUrl" name="imageUrl" />
+							<!--选择的图片  -->
 							<input type="file" name="img" onchange="uploadImg()" />
 						</td>
 					</tr>

@@ -36,7 +36,7 @@ public class TestBrandService extends TestSpringJunit {
 		}
 	}
 
-	/*
+	/*/sport_shop/src/main/resources/application-context.xml
 	 * 测试brandService 的查询方法
 	 */
 	@Test

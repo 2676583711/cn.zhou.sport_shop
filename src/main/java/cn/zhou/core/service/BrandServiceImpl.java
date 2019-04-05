@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.zhou.core.bean.BrandBean;
 import cn.zhou.core.dao.BrandDao;
+import division_page.PageBean;
 
 @Service
 @Transactional
@@ -40,7 +41,7 @@ public class BrandServiceImpl implements BrandService {
 	}
 
 	@Override
-	public int queryTotal() {
+	public Integer queryTotal() {
 		return brandDao.queryTotal();
 	}
 

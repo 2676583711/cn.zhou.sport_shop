@@ -5,13 +5,12 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.zhou.common.ImgServerUrl;
 import cn.zhou.core.bean.BrandBean;
 import cn.zhou.core.service.BrandService;
-import cn.zhou.page.DivisionPage;
+import division_page.DividePage;
 
 /*
  * 品牌
@@ -38,20 +37,17 @@ public class BrandController {
 		return "/brand/add";
 	}
 
-///313145288
-	// , String name, String imageUrl, String description, Integer sort,
-	// Integer isDisplay, ModelMap map
+	/*
+	 * 跳转修改页面
+	 */
 	@RequestMapping(value = "/brand/edit.do")
-	public String brandEdit(Integer id, ModelMap map) {// frame/product_main.do
+	public String brandEdit(Integer id, Model map) {// frame/product_main.do
 
 		map.addAttribute("brandBean", brandService.queryById(id));
-		map.addAttribute("serverUrl", ImgServerUrl.URL); // 返回服务器地址
+		// map.addAttribute("serverUrl", ImgServerUrl.URL); // 返回服务器地址
 
 		return "/brand/edit";
 	}
-//	 brandService.queryById(id)[BrandBean [id=10, name=ak497, 
-//			 description=free time, imageUrl=null, webSite=null, sort=10, 
-//			 isDisplay=1, pageNo=null, totalPages=null, total=null, limit=5, startIndex=null]]
 
 	// Integer id, String name, String description, String image_url, String
 	// web_site, Integer sort,
@@ -60,13 +56,16 @@ public class BrandController {
 	@RequestMapping(value = "/brand/update.do")
 	public String update(Integer id, String name, String imageUrl, String description, Integer sort,
 			Integer isDisplay) {
-		System.out.println("*****************id=,,,,description" + id + "::::::" + description);
 
-		BrandBean brandBean = new BrandBean(id, name, description, imageUrl, sort, isDisplay);
-		// id,name,description, sort, isDisplay)
+		BrandBean brandBean = new BrandBean();
+		brandBean.setId(id);
+		brandBean.setName(name);
+		brandBean.setImageUrl(imageUrl);
+		brandBean.setDescription(description);
+		brandBean.setSort(sort);
+		brandBean.setIsDisplay(isDisplay);
+
 		brandService.updateById(brandBean);
-
-		System.out.println("*****************brandBean.tostating" + brandBean.toString());
 
 		return "/brand/list";// edit
 	}
@@ -82,10 +81,19 @@ public class BrandController {
 			model.addAttribute("isDisplay", isDisplay);
 
 		}
+		// 返回服务器地址
+		model.addAttribute("serverUrl", ImgServerUrl.URL);
 
-		model.addAttribute("serverUrl", ImgServerUrl.URL); // 返回服务器地址
+		// 查询品牌数据并返回数据, pageNo, brandService.queryTotal()
+		BrandBean brandBean = new BrandBean();
+		brandBean.setId(id);
+		brandBean.setName(name);
+		brandBean.setIsDisplay(isDisplay);
+		brandBean.setPageCode(pageNo);
+		brandBean.setTotalRecord(brandService.queryTotal());
+
 		// 查询品牌数据并返回数据
-		model.addAttribute("brandBean", brandService.query(new BrandBean(id, name, isDisplay)));
+		model.addAttribute("brandBean", brandService.query(brandBean));
 
 		return "/brand/list";
 	}
@@ -96,21 +104,36 @@ public class BrandController {
 	 * 查询品牌数据
 	 * 
 	 * 分页查询
+	 * 
+	 * 
 	 */
+
 	@RequestMapping(value = "/brand/divide.do")
 	public String divide(Integer id, String name, Integer isDisplay, Integer pageNo, Model model) {// brand/list.jsp
+
+		System.out.println("************id,   name,   isDisplay\n" + id + "\n" + name + "\n" + isDisplay);
 
 		if (name != null & isDisplay != null) {
 			model.addAttribute("name", name);
 			model.addAttribute("isDisplay", isDisplay);
 		}
+		// 返回服务器地址
+		model.addAttribute("serverUrl", ImgServerUrl.URL);
 
-		model.addAttribute("serverUrl", ImgServerUrl.URL); // 返回服务器地址
+		// 设置品牌查询条件
 
-		// 返回分页显示所需的条件
-		BrandBean.divide(pageNo, brandService.queryTotal());
-		// 查询品牌数据并返回数据, pageNo, brandService.queryTotal()
-		model.addAttribute("brandBean", brandService.query(new BrandBean(id, name, isDisplay)));
+		BrandBean brandBean = new BrandBean();
+		brandBean.setId(id);
+		brandBean.setName(name);
+		brandBean.setIsDisplay(isDisplay);
+		brandBean.setPageCode(pageNo);
+		brandBean.setTotalRecord(brandService.queryTotal());
+
+		// 查询品牌数据并返回数据
+		// model.addAttribute("brandBean", brandService.query(brandBean));
+
+		model.addAttribute("pageBean",
+				DividePage.getPageBean(pageNo, brandService.query(brandBean), brandService.queryTotal()));
 
 		// 返回分页显示所需的条件
 		// model.addAttribute("divisionPage", divisionPage);
@@ -139,13 +162,28 @@ public class BrandController {
 
 		brandService.deleteById(id);
 
-		return "redirect:/admin/brand/list.do";
+		return "/brand/list";
 
 	}
 
+	/*
+	 * 多个删除
+	 */
 	@RequestMapping(value = "/brand/deletes.do")
-	public void deletes(Integer id) {
-		brandService.deleteById(id);
+	public String deletes(Integer[] ids, String name, Integer isDisplay, ModelMap map) {
+
+		if (name != null || !name.isEmpty()) {
+			map.addAttribute("name", name);
+		}
+
+		if (isDisplay != null) {
+			map.addAttribute("isDisplay", isDisplay);
+		}
+
+		brandService.deleteByIds(ids);
+
+		System.out.println("******************************ids[]=\n" + ids[0] + "\n" + ids[1]);
+		return "redirect:/admin/brand/list.do";
 	}
 
 }
